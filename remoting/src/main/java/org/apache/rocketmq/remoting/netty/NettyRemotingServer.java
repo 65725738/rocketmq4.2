@@ -188,6 +188,7 @@ public class NettyRemotingServer extends NettyRemotingAbstract implements Remoti
                     @Override
                     public void initChannel(SocketChannel ch) throws Exception {
                         ch.pipeline()
+                              //TODO 这里的defaultEventExecutorGroup 是一个实例 不是new的。 会导致 netty只用一个线程处理下面的逻辑.这个是为什么TODO?
                             .addLast(defaultEventExecutorGroup, HANDSHAKE_HANDLER_NAME,
                                 new HandshakeHandler(TlsSystemConfig.tlsMode))
                             .addLast(defaultEventExecutorGroup,
